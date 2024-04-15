@@ -1,0 +1,193 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="home page">
+		<meta name="author" content="Olesja Goroskova">
+		<meta name="viewport" content= "width=device-width, initial-scale=1.0">
+		<link href="/style.css" type="text/css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.0/showdown.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+	</head>
+	<body>
+
+		<header>
+		<section class="wrapper">
+		<nav class="top_nav">
+			<section class="left">
+				<figure class="search_icon"><a class="material-icons">search</a></figure>
+				<figure class="search_bar"><input type="text" placeholder="Search"></figure>			
+				</section>
+				<figure class="center"><a href="/">
+			  <img class="logo" src ="../img/GameReviews_logo.svg"></img> </a>
+			</figure> 
+
+		  	<section class="right">
+				<ul>
+				{{#if authorised}}
+							<li><a class="button2">
+								<button onclick="document.getElementById('02').style.display='block'" style="width:auto;">Add a game</button>
+							</a></li>
+							<li><a href="/logout" class="button1">	
+								<button>Log Out</button>
+							</a></li>
+				{{else}}
+							<li><a class="button2">	
+										<button href="/register" onclick="document.getElementById('03').style.display='block'" style="width:auto;">Register</button>
+								</a></li>
+
+								<li><a class="button1">	
+									<button onclick="document.getElementById('01').style.display='block'" style="width:auto;">Log In</button>
+								</a></li>
+				{{/if}}
+									</ul>
+				
+				<section id="01" class="LOG_IN_FORM">
+			
+					<form class="modal-content animate" action="/login" method="post">
+					  <figure class="close_button_container">
+						<figure onclick="document.getElementById('01').style.display='none'" class="close_button" title="Close Modal">&times;</figure>
+					  </figure>
+				  
+					  <section class="form_body">
+						  <p>Log In</p>
+						<section class="user_name_container">
+							<label for="user"><b>Username:</b></label>
+							<input type="text" placeholder="Enter Username" name="username"  value="{{body.user}}"  required>
+						</section>
+						<section class="user_psw_container">
+							<label for="password"><b>Password: </b></label>
+							<input type="password" placeholder="Enter Password" name="password" value="{{body.pass}}" required>
+						</section>
+					
+							<label class="remeberme_label"><input type="checkbox" checked="checked" name="remember"> Remember me</label>
+							<figure class="submit_button_div"><button type="submit"class="submit_button">Log In</button></figure>
+
+					  </section>
+						</form>
+				</section>
+
+				  <section id="02" class="ADD_A_GAME_FORM">
+					<form class="new_game_content animate" action="/add_game" method="POST" enctype="multipart/form-data" >
+						<figure class="close_button_container">
+						  <figure onclick="document.getElementById('02').style.display='none'" class="close_button" title="Close Game Modal">&times;</figure>
+						</figure>
+					
+						<section class="form_body">
+							<p>Add a game</p>
+							<hr class="add_game_line">
+
+						  	<section class="upload_image">
+								  <p class="upload_image_paragraph">Add image:</p>
+									<input type="file" id="myFile" name="filename" accept="image/*" required>
+							  </section>
+							<section class="select_category">
+								<section class="select_cat_menu">
+								<label class="select_label" for="categories">Select Category:</label>
+							<select class="select" id="categories" name="select_category" required>
+									  <option value="Cinematic">Cinematic</option>
+									  <option value="Fighting">Fighting</option>
+									  <option value="Horror">Horror</option>
+									  <option value="MMORPG">MMORPG</option>
+									  <option value="MOBA">MOBA</option>
+									  <option value="Shooter">Shooter</option>
+									  <option value="RTS">RTS</option>
+									  <option value="Role Play">Role Play</option>
+
+										<option value="Survival">Survival</option>
+										<option value="Strategy">Strategy</option>
+
+									</select>
+								 </section>
+								</section>
+						<section class="game_details_headers">
+									<label for="games_name"><b>Name:</b></label>
+									<label for="release_year"><b>Release date:</b></label>
+									<label for="publisher"><b>Publisher:</b></label>
+									<label for="description"><b>Description:</b></label>
+								  <label for="rating"><b>Rating:</b></label>
+
+						</section>
+								  <section class="game_details_inputs">
+									
+									  <input type="text" placeholder="Type here" name="games_name" required >
+
+										<input type="range" name="release_date" value="0"  step="1" min="1980" max="2022" oninput="this.nextElementSibling.value = this.value" required>
+										<output>1980</output>
+										
+									  <input type="text" placeholder="Type here" name="publisher" required>
+									  <textarea type="text" placeholder="Type here" name="description" class="textarea" required > </textarea>
+							
+										<input type="range" name="rating" value="0" step="1" min="0" max="5" oninput="this.nextElementSibling.value = this.value" required>
+										<output>0</output>
+									</section>
+
+ 							
+					
+						<section class="add_button_div">
+							<button type="add" class="add_button">Add a game</button></section>
+				  		</section>
+							</section>
+					  </form>
+						</section>
+
+			<section id="03" class="REGISTER_FORM">
+			
+						<form class="modal-content register animate" action="/register" method="post">
+						  <section class="close_button_container">
+							<section onclick="document.getElementById('03').style.display='none'" class="close_button" title="Close Modal">&times;</section>
+						  </section>
+					  
+						  <section class="form_body">
+							  <p>Register</p>
+							<section class="user_name_container reg">
+								<label for="user"><b>Username:</b></label>
+								<input type="text" placeholder="Enter Username" name="username" value="{{body.user}}" required>
+							</section>
+							<section class="user_psw_container reg">
+								<label for="password1"><b>Password: </b></label>
+								<input type="password" placeholder="Enter Password" name="password1" value="{{body.pass}}"  required>
+							</section>
+							<section class="user_psw_container reg">
+								<label for="password2"><b>Password: </b></label>
+								<input type="password" placeholder="Enter Password (again)" name="password2" value="{{body.pass}}"  required>
+							</section>
+								<section class="submit_button_div"><button type="submit" class="submit_button">Register</button></section>
+						  </section>
+							</form>
+					</section>			
+
+				</nav>
+				</section>
+	
+			
+		<section class="bottom_nav">
+		  <ul>
+			<li><section class="categories_menu">
+		<a onclick="myFunction1()">Categories</a>
+				<section id="myCategoriesMenu" class="categories_menu_content">
+					<a class="menu" href="/Cinematic" >Cinematic</a>
+					<a class="menu" href="/Fighting">Fighting</a>
+					<a class="menu" href="/Horror">Horror</a>
+					<a class="menu" href="/MMORPG">MMORPG</a>
+					<a class="menu" href="/MOBA">MOBA</a>
+					<a class="menu" href="/Shooter">Shooter</a>
+					<a class="menu" href="/RTS">RTS</a>
+					<a class="menu" href="/RolePlay">Role Play</a>
+					<a class="menu" href="/Survival">Survival</a>
+					<a class="menu" href="/Strategy">Strategy</a>
+			 	 </section></section></li>
+		
+			<li><a href="/New">New</a></li>	
+			<li><a href="/">All games</a></li>
+		  </ul>
+	  </section>
+
+
+	{{#if category}}<aside class="category_h">{{category}}</aside>{{/if}}
+	{{#if error}}	<aside class="error">{{error}}</aside>{{/if}}
+
+	</header>

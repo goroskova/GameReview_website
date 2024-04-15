@@ -1,0 +1,96 @@
+
+<main>
+	<nav class="back_div"><a href="/" class="back">< Back </a></nav>
+	  <section class="game_details"> 
+			{{#each singleGame}}
+			<section class="center_div">
+    <section class="game_details_table">
+        <table>
+					<tr>
+            <th>The publisher:</th>
+            <td>{{this.game_publisher}}</td>
+            </tr>
+            <tr>
+            <th>Release year:</th>
+            <td>{{this.game_year_of_release}}</td>
+            </tr>
+            <tr>
+            <th>Category:</th>
+            <td>{{this.game_category}}</td>
+            </tr>
+						<tr>
+            <th>Added:</th>
+            <td>{{this.game_added_at}}</td>
+            </tr>
+						<tr>
+            <th>Added by:</th>
+            <td>{{this.user}}</td>
+						</tr>
+			
+        </table>
+    </section>
+	  <details class="summary">
+        <p> {{this.game_description}}</p>
+    </details>
+</section>
+    <figure class ="game_img">
+        <p>{{this.game_name}}</p>
+        <img class="game_img_img" src="{{this.game_img}}" alt="The_Witcher_3">
+	
+    {{/each}}
+    
+{{#if authorised}}
+    	{{#each singleGame}}
+    <form class="comment_form" action="/comment" method="POST" enctype="multipart/form-data" >
+		<dsectioniv class="rating">
+			<figure class="rating_label"><label for="amount">Rate this game:</label></figure>
+		<input type="range" name="rating" value="0" step="1" min="0" max="5" oninput="this.nextElementSibling.value = this.value" required>
+			<output name="rating_output" >0</output>
+      <input name="game_id" type="hidden" value={{this.game_id}} class="for_comment_form">
+									
+	    </section>
+      {{/each}}	
+       {{/if}}
+        </figure>
+  </section>
+
+    <section class="reviews_grid">
+		<aside class="header_and_line">
+			<p class="header">Reviews</p>
+			<hr class="line">
+		</aside>
+    {{#if authorised}}
+        <section class="review_item">
+            <section class="review_content">
+                <p class="review_username">{{authorised}}</p>
+				<section class="write_comment">
+				<textarea class="textarea1" name="comment_text" placeholder="Comment here..."></textarea><article class="article1" ></article></section>			
+						<nav class="Enter_button_div"><button onclick="myFunction_Markdown()" class="button5" type="button" >Convert</button>
+            <button type="submit"  class="button4">Enter</button> </form>
+                        </nav> 
+
+			</section>
+            </section>
+        {{/if}}
+      
+			{{#each allReviews}}
+      
+	<section class="review_item">
+            <section class="review_content" >
+            
+              <p class="review_username">{{this.user}}</p> <p class="review_date">{{this.review_added_at}}</p>
+              
+      <p class="review_comment">{{this.review_text}}</p>
+            </section>
+           {{#if this.review_rating}} <figure class="icon_star"><figure class="number">{{this.review_rating}}</figure><figure class="material-symbols-outlined">star</figure></figure>  {{/if}}
+        </section>
+	
+		
+  {{/each}}
+    </section>
+
+  
+
+</main>
+
+

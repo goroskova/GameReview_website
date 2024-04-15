@@ -1,0 +1,15 @@
+
+	<section class="Games">
+		
+		 {{#each allGames }}
+		<section class="item">
+
+			<a href="/game_details/{{this.game_id}}" ><img src="{{this.game_img}}" alt="img" class="game_image"></a>
+			<p class="name">{{this.game_name}}</p>
+			<p class="year">{{this.game_year_of_release}}</p>
+			<a href="/game/{{this.game_id}}"><button class="button_Details">Details</button></a>
+		</section>
+	   {{/each}}
+
+	</section>
+
